@@ -14,19 +14,24 @@ class Vector:
     def __init__(self, components):
         self._components = array("f", components)
         self.keywords = Vector.keywords[:len(components)]
-
+    
+    # Represents the == operator.
     def __eq__(self, other):
         return list(self) == list(other)
 
+    # Represents the != operator.
     def __ne__(self, other):
         return list(self) != list(other)
 
+    # Represents len function.
     def __len__(self):
         return len(self._components)
 
+    # Represents the print function.
     def __repr__(self):
         return f'Vector({list(self._components)})'
 
+    # Represents reassigning an attribute
     def __setattr__(self, name, value):
         cls = type(self)
         if (name in cls.keywords) and (len(name) == 1):
@@ -36,19 +41,23 @@ class Vector:
             super().__setattr__(name, value)
         else:
             raise AttributeError("Vector obj only sets attributes [xyzt].")
-
+    
+    # Represents getting an attribute.
     def __getattr__(self, name):
         cls = type(self)
         if (name in cls.keywords) and (len(name) == 1):
             pos = cls.keywords.find(name)
             return self._components[pos]
 
+    # Represents indexing (Ex: vector[0])
     def __getitem__(self, index):
         return self._components[index]
 
+    # Rest of special methods represent different math operations.
+
     def __abs__(self):
         return sqrt(sum(x * x for x in self))
-
+    
     def __pos__(self):
         components = []
         for i in self:
